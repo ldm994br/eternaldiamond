@@ -88,13 +88,25 @@
         .buttons img:hover {
             opacity: 0.7;
         }
-        @media (max-width: 768px) {
-            body {
-                background-color: #f8f9fa;
-            }
-            .page h2, .page p {
-                font-size: 0.9rem;
-            }
+        /* Mobile-specific styles */
+        .mobile .book-container {
+            max-width: 400px;
+            height: 70vh;
+        }
+        .mobile .page h2, .mobile .page p {
+            font-size: 1.2rem;
+        }
+        .mobile .buttons img {
+            width: 60px;
+            height: 60px;
+        }
+        /* Desktop-specific styles */
+        .desktop .book-container {
+            max-width: 800px;
+            height: 90vh;
+        }
+        .desktop .page h2, .desktop .page p {
+            font-size: 1rem;
         }
     </style>
 </head>
@@ -108,8 +120,8 @@
         <div class="book" id="book"></div>
     </div>
     <div class="buttons" id="buttons" style="display:none;">
-        <img src="https://github.com/ldm994br/eternaldiamond/blob/main/1.png?raw=true" onclick="prevPage()" alt="Previous">
-        <img src="https://github.com/ldm994br/eternaldiamond/blob/main/1.png?raw=true" onclick="nextPage()" alt="Next">
+        <img src="/mnt/data/image.png" onclick="prevPage()" alt="Previous">
+        <img src="/mnt/data/image.png" onclick="nextPage()" alt="Next">
     </div>
 
     <script>
@@ -118,18 +130,21 @@
             {title: "Sản phẩm 1", img: "sanpham1.png", desc: "Mô tả sản phẩm 1."},
             {title: "Sản phẩm 2", img: "sanpham2.png", desc: "Mô tả sản phẩm 2."},
             {title: "Sản phẩm 3", img: "sanpham3.png", desc: "Mô tả sản phẩm 3."}
+            {title: "Sản phẩm 4", img: "sanpham4.jpg", desc: "Mô tả sản phẩm 4."},
+            {title: "Sản phẩm 5", img: "sanpham5.jpg", desc: "Mô tả sản phẩm 5."},
+            {title: "Sản phẩm 6", img: "sanpham6.jpg", desc: "Mô tả sản phẩm 6."},
+            {title: "Sản phẩm 7", img: "sanpham7.jpg", desc: "Mô tả sản phẩm 7."},
+            {title: "Sản phẩm 8", img: "sanpham8.jpg", desc: "Mô tả sản phẩm 8."},
+            {title: "Sản phẩm 9", img: "sanpham9.jpg", desc: "Mô tả sản phẩm 9."}
         ];
         const book = document.getElementById("book");
+        const body = document.body;
 
         function startView(device) {
             document.getElementById("choice-container").style.display = "none";
             document.getElementById("book-container").style.display = "flex";
             document.getElementById("buttons").style.display = "flex";
-            if (device === 'mobile') {
-                document.body.style.backgroundColor = "#f8f9fa";
-            } else {
-                document.body.style.backgroundColor = "#ededed";
-            }
+            body.classList.add(device);
             createPages();
         }
 
@@ -145,4 +160,3 @@
     </script>
 </body>
 </html>
-
