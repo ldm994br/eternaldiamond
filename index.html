@@ -18,7 +18,21 @@
             align-items: center;
             height: 100vh;
         }
+        .choice-container {
+            text-align: center;
+        }
+        .choice-container button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+        }
         .book-container {
+            display: none;
             position: relative;
             width: 90vw;
             height: 80vh;
@@ -58,9 +72,6 @@
             font-size: 1rem;
             margin: 10px 0;
         }
-        .page.flipped {
-            transform: rotateY(-180deg);
-        }
         .buttons {
             position: absolute;
             bottom: 10px;
@@ -77,15 +88,26 @@
         .buttons img:hover {
             opacity: 0.7;
         }
+        @media (max-width: 768px) {
+            body {
+                background-color: #f8f9fa;
+            }
+            .page h2, .page p {
+                font-size: 0.9rem;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="book-container">
-        <div class="book" id="book">
-            <!-- Các trang sẽ được thêm vào bằng JavaScript -->
-        </div>
+    <div class="choice-container" id="choice-container">
+        <h2>Bạn đang xem trên thiết bị nào?</h2>
+        <button onclick="startView('mobile')">Điện thoại</button>
+        <button onclick="startView('desktop')">Windows/Apple</button>
     </div>
-    <div class="buttons">
+    <div class="book-container" id="book-container">
+        <div class="book" id="book"></div>
+    </div>
+    <div class="buttons" id="buttons" style="display:none;">
         <img src="https://github.com/ldm994br/eternaldiamond/blob/main/1.png?raw=true" onclick="prevPage()" alt="Previous">
         <img src="https://github.com/ldm994br/eternaldiamond/blob/main/1.png?raw=true" onclick="nextPage()" alt="Next">
     </div>
@@ -95,16 +117,21 @@
             {title: "Trang đầu", img: "https://github.com/ldm994br/eternaldiamond/blob/main/1.png?raw=true", desc: "Chào mừng bạn đến với giới thiệu sản phẩm."},
             {title: "Sản phẩm 1", img: "sanpham1.png", desc: "Mô tả sản phẩm 1."},
             {title: "Sản phẩm 2", img: "sanpham2.png", desc: "Mô tả sản phẩm 2."},
-            {title: "Sản phẩm 3", img: "sanpham3.png", desc: "Mô tả sản phẩm 3."},
-            {title: "Sản phẩm 4", img: "sanpham4.png", desc: "Mô tả sản phẩm 4."},
-            {title: "Sản phẩm 5", img: "sanpham5.png", desc: "Mô tả sản phẩm 5."},
-            {title: "Sản phẩm 6", img: "sanpham6.png", desc: "Mô tả sản phẩm 6."},
-            {title: "Sản phẩm 7", img: "sanpham7.png", desc: "Mô tả sản phẩm 7."},
-            {title: "Sản phẩm 8", img: "sanpham8.png", desc: "Mô tả sản phẩm 8."},
-            {title: "Sản phẩm 9", img: "sanpham9.png", desc: "Mô tả sản phẩm 9."}
+            {title: "Sản phẩm 3", img: "sanpham3.png", desc: "Mô tả sản phẩm 3."}
         ];
-        let currentPage = 0;
         const book = document.getElementById("book");
+
+        function startView(device) {
+            document.getElementById("choice-container").style.display = "none";
+            document.getElementById("book-container").style.display = "flex";
+            document.getElementById("buttons").style.display = "flex";
+            if (device === 'mobile') {
+                document.body.style.backgroundColor = "#f8f9fa";
+            } else {
+                document.body.style.backgroundColor = "#ededed";
+            }
+            createPages();
+        }
 
         function createPages() {
             products.forEach((product, index) => {
@@ -115,38 +142,7 @@
                 book.appendChild(page);
             });
         }
-
-        function updatePage() {
-            const pages = document.querySelectorAll(".page");
-            pages.forEach((page, index) => {
-                if (index === currentPage) {
-                    page.style.zIndex = products.length;
-                    page.classList.remove("flipped");
-                } else if (index < currentPage) {
-                    page.classList.add("flipped");
-                    page.style.zIndex = products.length - index;
-                } else {
-                    page.classList.remove("flipped");
-                    page.style.zIndex = products.length - index;
-                }
-            });
-        }
-
-        function nextPage() {
-            if (currentPage < products.length - 1) {
-                currentPage++;
-                updatePage();
-            }
-        }
-
-        function prevPage() {
-            if (currentPage > 0) {
-                currentPage--;
-                updatePage();
-            }
-        }
-
-        createPages();
     </script>
 </body>
 </html>
+
