@@ -59,6 +59,8 @@
         .page.flipped {
             transform: rotateY(-180deg);
         }
+
+        /* NÚT BẤM */
         .buttons {
             position: absolute;
             top: 50%;
@@ -66,7 +68,7 @@
             display: flex;
             justify-content: space-between;
             transform: translateY(-50%);
-            pointer-events: none;
+            z-index: 10; /* Đảm bảo luôn hiển thị */
         }
         .buttons button {
             background: rgba(0, 0, 0, 0.5);
@@ -85,21 +87,21 @@
         }
         .buttons button:first-child {
             position: absolute;
-            left: 20px;
+            left: calc(50% - 400px); /* Đưa sát mép sách bên trái */
         }
         .buttons button:last-child {
             position: absolute;
-            right: 20px;
+            right: calc(50% - 400px); /* Đưa sát mép sách bên phải */
         }
     </style>
 </head>
 <body>
     <div class="book-container">
         <div class="book" id="book"></div>
-        <div class="buttons">
-            <button onclick="prevPage()">&#x3C;</button>
-            <button onclick="nextPage()">&#x3E;</button>
-        </div>
+    </div>
+    <div class="buttons">
+        <button onclick="prevPage()">&#x3C;</button>
+        <button onclick="nextPage()">&#x3E;</button>
     </div>
     <script>
         const products = [
