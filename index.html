@@ -62,20 +62,19 @@
             transform: rotateY(-180deg);
         }
         .buttons {
-    position: fixed; /* Giữ vị trí cố định trên màn hình */
-    bottom: 10px; /* Cách mép dưới 10px */
-    left: 0;
-    width: 100%;
+    position: fixed;
+    bottom: 20px;
+    left: 10px;
+    right: 10px;
     display: flex;
-    justify-content: space-between; /* Căn ra hai góc */
-    padding: 0 20px;
-    z-index: 999; /* Đảm bảo luôn hiển thị trên cùng */
+    justify-content: space-between;
 }
+
 .buttons img {
-    width: 50px; /* Đảm bảo nút dễ bấm trên điện thoại */
+    width: 50px;
     height: auto;
-    cursor: pointer;
-        }
+    object-fit: contain; /* Đảm bảo hình ảnh hiển thị đúng */
+}
         .buttons img:hover {
             opacity: 0.7;
         }
