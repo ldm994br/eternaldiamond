@@ -9,7 +9,6 @@
             font-family: 'Arial', sans-serif;
             background-color: #ededed;
             color: #333;
-            text-align: center;
             margin: 0;
             padding: 0;
             display: flex;
@@ -26,17 +25,17 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: auto; /* Cho phép cuộn để người dùng kéo khi phóng to */
-            touch-action: none; /* Giúp xử lý vuốt màn hình trên thiết bị di động */
-            transform-origin: center center;
-            transition: transform 0.5s ease-in-out;
+            overflow: auto; /* Cho phép cuộn khi phóng to */
+            touch-action: none; /* Giúp xử lý vuốt trên thiết bị di động */
             background-color: white;
             box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            transform-origin: center center; /* Đảm bảo phóng to từ trung tâm */
+            transition: transform 0.3s ease-in-out; /* Điều chỉnh tốc độ phóng to */
         }
 
         .book {
-            width: 21cm; /* Khổ A4 */
-            height: 29.7cm; /* Khổ A4 */
+            width: 21cm; /* Kích thước gốc của cuốn sách (A4) */
+            height: 29.7cm; /* Kích thước gốc của cuốn sách (A4) */
             display: flex;
             flex-direction: row;
             position: relative;
@@ -82,16 +81,15 @@
             background: rgba(0, 0, 0, 0.8);
         }
 
-        /* Điều chỉnh cho các màn hình nhỏ */
+        /* Responsive cho điện thoại */
         @media (max-width: 768px) {
             .book-container {
-                width: 100vw; /* Giảm chiều rộng cuốn sách để phù hợp với màn hình điện thoại */
+                width: 100vw; /* Giảm chiều rộng cuốn sách trên màn hình điện thoại */
                 height: 100vh;
-                overflow: auto; /* Cho phép cuộn */
             }
             .book {
-                width: 90%; /* Giảm chiều rộng cuốn sách cho phù hợp với màn hình điện thoại */
-                height: auto; /* Tự động điều chỉnh chiều cao */
+                width: 90%; /* Điều chỉnh cuốn sách cho phù hợp với màn hình điện thoại */
+                height: auto; /* Điều chỉnh chiều cao tự động */
             }
         }
 
@@ -138,9 +136,8 @@
     const bookContainer = document.getElementById("book-container");
 
     function createPages() {
-        // Xóa tất cả các trang cũ
-        book.innerHTML = '';
-        
+        book.innerHTML = ''; // Xóa các trang cũ
+
         products.forEach((product, index) => {
             const page = document.createElement("div");
             page.classList.add("page");
@@ -157,6 +154,7 @@
 
             book.appendChild(page);
         });
+
         updatePage();
     }
 
@@ -198,8 +196,8 @@
             scaleFactor -= 0.05;  // Giảm nhẹ tỷ lệ
         }
 
-        // Không giới hạn phóng to và thu nhỏ
-        scaleFactor = Math.max(0.5, Math.min(scaleFactor, 3)); // Cấp độ thu nhỏ và phóng to tùy chỉnh (từ 0.5 đến 3 lần)
+        // Giới hạn mức phóng to từ 0.5 đến 3 lần
+        scaleFactor = Math.max(0.5, Math.min(scaleFactor, 3));
 
         // Cập nhật cuốn sách theo tỷ lệ
         bookContainer.style.transform = `scale(${scaleFactor})`;
