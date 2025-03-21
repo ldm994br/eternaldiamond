@@ -20,9 +20,9 @@
     }
 
     .book-container {
-      width: 90vw;
+      width: 90vw; /* Dễ dàng điều chỉnh để phù hợp với kích thước màn hình */
       max-width: 800px;
-      aspect-ratio: 1 / 1.41;
+      aspect-ratio: 1 / 1.41; /* Tỷ lệ A4 */
       width: 595px; /* A4 chiều rộng */
       height: 842px; /* A4 chiều cao */
       position: relative;
@@ -30,7 +30,7 @@
       margin: auto;
       border: 2px solid #ccc;
       box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
-      padding: 20px;
+      padding: 0; /* Không có padding bên trong */
       background-color: white;
     }
 
@@ -157,11 +157,11 @@
 
     /* Nút bấm sát mép sách */
     .buttons button:first-child {
-      margin-left: -10px; /* Sát mép trái */
+      margin-left: -15px; /* Sát mép trái */
     }
 
     .buttons button:last-child {
-      margin-right: -10px; /* Sát mép phải */
+      margin-right: -15px; /* Sát mép phải */
     }
 
     /* Responsive cho điện thoại */
