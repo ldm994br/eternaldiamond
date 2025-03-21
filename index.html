@@ -77,23 +77,39 @@
             justify-content: space-between;
             transform: translateY(-50%);
             z-index: 1000;
-            padding: 0 10px;
+            padding: 0;
+            pointer-events: none; /* Để tránh ảnh hưởng layout */
         }
 
         .buttons img {
             width: 50px;
             height: auto;
             cursor: pointer;
+            pointer-events: all; /* Kích hoạt sự kiện click */
         }
 
-        .buttons img:hover {
-            opacity: 0.7;
+        .buttons img:first-child {
+            position: absolute;
+            left: -60px; /* Đưa nút trái ra sát mép sách */
         }
-        
+
+        .buttons img:last-child {
+            position: absolute;
+            right: -60px; /* Đưa nút phải ra sát mép sách */
+        }
+
         /* Responsive cho điện thoại */
         @media (max-width: 768px) {
             .buttons img {
                 width: 40px;
+            }
+
+            .buttons img:first-child {
+                left: -40px; 
+            }
+
+            .buttons img:last-child {
+                right: -40px;
             }
         }
     </style>
