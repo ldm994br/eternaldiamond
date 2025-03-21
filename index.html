@@ -84,14 +84,20 @@
     gap: 10px; /* Khoảng cách giữa hai ảnh */
 }
 
-.img-container img:first-child {
-    width: 50%;  /* Điều chỉnh kích thước ảnh đầu tiên */
-    height: auto; /* Giữ tỷ lệ ảnh */
+.img-container {
+    display: flex;
+    flex-direction: row; /* Xếp ảnh theo chiều ngang */
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* Khoảng cách giữa hai ảnh */
+    max-width: 100%; /* Đảm bảo không tràn ra ngoài */
 }
 
-.img-container img:last-child {
-    width: 50%;  /* Điều chỉnh kích thước ảnh thứ hai */
-    height: auto; /* Giữ tỷ lệ ảnh */
+.img-container img {
+    width: 45%; /* Để mỗi ảnh chiếm tối đa 45% */
+    height: auto;
+    max-height: 250px; /* Hạn chế chiều cao ảnh để không quá to */
+    object-fit: contain;
 }
 
     </style>
