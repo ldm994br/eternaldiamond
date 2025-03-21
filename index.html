@@ -82,10 +82,28 @@
             background: rgba(0, 0, 0, 0.8);
         }
 
-        /* Responsive cho điện thoại */
+        /* Điều chỉnh cho các màn hình nhỏ */
         @media (max-width: 768px) {
+            .book-container {
+                width: 90vw; /* Giảm chiều rộng cuốn sách để phù hợp với màn hình điện thoại */
+                height: auto;
+            }
+
+            .book {
+                transform: scale(0.8); /* Phóng to thu nhỏ cuốn sách để vừa với màn hình */
+            }
+        }
+
+        /* Responsive cho màn hình nhỏ hơn (điện thoại) */
+        @media (max-width: 480px) {
+            .book-container {
+                width: 100vw;
+                height: 100vh;
+                padding: 10px; /* Thêm padding để cuốn sách không bị chặt góc */
+            }
+
             .buttons button {
-                font-size: 1.5rem;
+                font-size: 1.5rem; /* Giảm kích thước nút điều hướng */
             }
         }
     </style>
@@ -179,11 +197,16 @@
     function scaleBook(e) {
         if (e.deltaY < 0) {
             // Phóng to
-            scaleFactor = scaleFactor < 2 ? scaleFactor + 0.1 : scaleFactor;
+            scaleFactor += 0.05;  // Tăng nhẹ tỷ lệ
         } else {
             // Thu nhỏ
-            scaleFactor = scaleFactor > 0.5 ? scaleFactor - 0.1 : scaleFactor;
+            scaleFactor -= 0.05;  // Giảm nhẹ tỷ lệ
         }
+
+        // Không giới hạn phóng to và thu nhỏ
+        scaleFactor = Math.max(0.2, Math.min(scaleFactor, 3)); // Cấp độ thu nhỏ và phóng to tùy chỉnh (từ 0.2 đến 3 lần)
+
+        // Cập nhật cuốn sách theo tỷ lệ
         bookContainer.style.transform = `scale(${scaleFactor})`;
     }
 
