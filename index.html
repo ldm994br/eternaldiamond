@@ -18,22 +18,22 @@
             align-items: center;
             height: 100vh;
         }
+
         .book-container {
-   width: 595px;  /* A4 chiều rộng */
-    height: 842px; /* A4 chiều cao */
-    position: relative;
-    margin: auto;
-    border: 2px solid #ccc;
-    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
-    padding: 20px;
-    background-color: white;
-}
+            width: 595px; /* A4 width */
+            height: 842px; /* A4 height */
+            position: relative;
+            margin: auto;
+            perspective: 1500px; /* Tạo chiều sâu cho hiệu ứng lật */
+        }
+
         .book {
             width: 100%;
             height: 100%;
             position: relative;
             transform-style: preserve-3d;
         }
+
         .page {
             width: 100%;
             height: 100%;
@@ -42,11 +42,11 @@
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
             transform-origin: left center;
-            transform-style: preserve-3d;
             transition: transform 1s ease-in-out;
             backface-visibility: hidden;
-            padding: 10px;
+            padding: 20px;
         }
+
         .page img {
             width: 100%;
             height: auto;
@@ -54,111 +54,73 @@
             max-height: 60vh;
             object-fit: cover;
         }
+
         .page h2, .page p {
             font-size: 1rem;
             margin: 10px 0;
         }
-        .page.flipped {
+
+        .flipped {
             transform: rotateY(-180deg);
         }
-        .buttons {
-    position: fixed;
-    bottom: 20px;
-    left: 10px;
-    right: 10px;
-    display: flex;
-    justify-content: space-between;
-}
 
-.buttons img {
-    width: 50px;
-    height: auto;
-    object-fit: contain; /* Đảm bảo hình ảnh hiển thị đúng */
-}
+        .buttons {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .buttons img {
+            width: 50px;
+            height: auto;
+            cursor: pointer;
+        }
+
         .buttons img:hover {
             opacity: 0.7;
         }
-        @media (max-width: 768px) { /* Dành cho màn hình nhỏ */
-    .buttons {
-        bottom: 5px; /* Dịch nút lên để không bị che */
-        padding: 0 10px;
-    }
-    .buttons img {
-        width: 40px; /* Giảm kích thước trên điện thoại */
-    }
-}
-
-        .img-container {
-    display: flex;
-    flex-direction: column; /* Xếp ảnh theo chiều ngang */
-    justify-content: center;
-    align-items: center;
-    gap: 0px; /* Khoảng cách giữa hai ảnh */
-    max-width: 100%; /* Đảm bảo không tràn ra ngoài */
-
-}
-
-.img-container img:first-child {
-    width: 70%; /* Thu nhỏ hình 1 lại */
-    height: auto;
-}
-
-.img-container img:last-child {
-    width: 100%; /* Giữ nguyên kích thước hình 2 */
-    height: auto;
-}
-
-}
 
     </style>
 </head>
 <body>
     <div class="book-container">
         <div class="book" id="book">
-            <!-- Các trang sẽ được thêm vào bằng JavaScript -->
+            <!-- Trang sách sẽ được thêm ở đây -->
         </div>
     </div>
     <div class="buttons">
-        <img src="/mnt/data/image.png" onclick="prevPage()" alt="Previous">
-        <img src="/mnt/data/image.png" onclick="nextPage()" alt="Next">
+        <img src="https://cdn-icons-png.flaticon.com/512/271/271220.png" onclick="prevPage()" alt="Previous">
+        <img src="https://cdn-icons-png.flaticon.com/512/271/271228.png" onclick="nextPage()" alt="Next">
     </div>
 
     <script>
         const products = [
-            {title: "Trang đầu", img: "/mnt/data/1.png", desc: "Chào mừng bạn đến với giới thiệu sản phẩm."},
-            {title: "Sản phẩm 1", img: ["https://github.com/ldm994br/eternaldiamond/blob/main/Th%C3%A0nh_c%C3%B4ng_c%C3%B3_th%E1%BB%B1c_s%E1%BB%B1_l%C3%A0_v%C4%A9nh_c%E1%BB%ADu-removebg-preview.png?raw=true","https://github.com/ldm994br/eternaldiamond/blob/main/Th%C3%A0nh_c%C3%B4ng_c%C3%B3_th%E1%BB%B1c_s%E1%BB%B1_l%C3%A0_v%C4%A9nh_c%E1%BB%ADu__1_-removebg-preview.png?raw=true"], desc: "Mô tả sản phẩm 1."},
-            {title: "Sản phẩm 2", img: "sanpham2.png", desc: "Mô tả sản phẩm 2."},
-            {title: "Sản phẩm 3", img: "sanpham3.png", desc: "Mô tả sản phẩm 3."},
-            {title: "Sản phẩm 4", img: "sanpham4.png", desc: "Mô tả sản phẩm 4."},
-            {title: "Sản phẩm 5", img: "sanpham5.png", desc: "Mô tả sản phẩm 5."},
-            {title: "Sản phẩm 6", img: "sanpham6.png", desc: "Mô tả sản phẩm 6."},
-            {title: "Sản phẩm 7", img: "sanpham7.png", desc: "Mô tả sản phẩm 7."},
-            {title: "Sản phẩm 8", img: "sanpham8.png", desc: "Mô tả sản phẩm 8."},
-            {title: "Sản phẩm 9", img: "sanpham9.png", desc: "Mô tả sản phẩm 9."}
+            {title: "Trang đầu", img: "https://via.placeholder.com/500x700", desc: "Chào mừng bạn đến với giới thiệu sản phẩm."},
+            {title: "Sản phẩm 1", img: ["https://github.com/ldm994br/eternaldiamond/blob/main/Th%C3%A0nh_c%C3%B4ng_c%C3%B3_th%E1%BB%B1c_s%E1%BB%B1_l%C3%A0_v%C4%A9nh_c%E1%BB%ADu-removebg-preview.png?raw=true",https://github.com/ldm994br/eternaldiamond/blob/main/Th%C3%A0nh_c%C3%B4ng_c%C3%B3_th%E1%BB%B1c_s%E1%BB%B1_l%C3%A0_v%C4%A9nh_c%E1%BB%ADu__1_-removebg-preview.png?raw=true"], desc: "Mô tả sản phẩm 1."},
+            {title: "Sản phẩm 2", img: "https://via.placeholder.com/500x700/00ff00/ffffff", desc: "Mô tả sản phẩm 2."},
+            {title: "Sản phẩm 3", img: "https://via.placeholder.com/500x700/0000ff/ffffff", desc: "Mô tả sản phẩm 3."}
         ];
+
         let currentPage = 0;
         const book = document.getElementById("book");
 
         function createPages() {
             products.forEach((product, index) => {
-        const page = document.createElement("div");
-        page.classList.add("page");
+                const page = document.createElement("div");
+                page.classList.add("page");
 
-        let imgContent = "";
-        if (Array.isArray(product.img)) {
-            imgContent = `
-                <div class="img-container">
-                    <img src="${product.img[0]}" alt="${product.title}">
-                    <img src="${product.img[1]}" alt="${product.title}">
-                </div>`;
-        } else {
-            imgContent = `<img src="${product.img}" alt="${product.title}">`;
-        }
-
-        page.innerHTML = `<h2>${product.title}</h2>${imgContent}<p>${product.desc}</p>`;
-        page.style.zIndex = products.length - index;
-        book.appendChild(page);
-    });
+                page.innerHTML = `
+                    <h2>${product.title}</h2>
+                    <img src="${product.img}" alt="${product.title}">
+                    <p>${product.desc}</p>
+                `;
+                
+                page.style.zIndex = products.length - index;
+                book.appendChild(page);
+            });
         }
 
         function updatePage() {
