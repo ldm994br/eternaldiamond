@@ -13,25 +13,19 @@
       margin: 0;
       padding: 0;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
     }
 
     .book-container {
-      width: 90vw; /* Dễ dàng điều chỉnh để phù hợp với kích thước màn hình */
-      max-width: 800px;
-      aspect-ratio: 1 / 1.41; /* Tỷ lệ A4 */
-      width: 595px; /* A4 chiều rộng */
-      height: 842px; /* A4 chiều cao */
       position: relative;
-      perspective: 2000px;
-      margin: auto;
-      border: 2px solid #ccc;
-      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
-      padding: 0; /* Không có padding bên trong */
+      max-width: 100%;  /* Cho phép cuốn sách chiếm toàn bộ chiều rộng màn hình */
+      max-height: 90vh;  /* Giới hạn chiều cao cuốn sách */
+      aspect-ratio: 1 / 1.41; /* Tỷ lệ A4 */
       background-color: white;
+      overflow: hidden; /* Đảm bảo không bị cắt bớt */
+      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
     }
 
     .book {
@@ -48,16 +42,12 @@
       background: white;
       box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
       background: #ffffff;
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
       border-radius: 10px;
       transform-origin: left center;
       transform-style: preserve-3d;
       transition: transform 1s ease-in-out;
       backface-visibility: hidden;
       padding: 10px;
-    }
-
-    .page .front, .page .back {
     }
 
     .page img {
@@ -81,29 +71,10 @@
       transform: rotateY(180deg);
     }
 
-    .page h2, .page p {
-      font-size: 1rem;
-      margin: 10px 0;
-    }
-
     .page.flipped {
       transform: rotateY(-180deg);
     }
 
-    /* Hiệu ứng 3D cạnh trên của sách */
-    .book::before {
-      content: "";
-      position: absolute;
-      width: 100%;
-      height: 10px; /* Tăng độ dày của cạnh trên */
-      background: linear-gradient(to bottom, #aaa, #ddd); /* Màu chuyển sắc từ xám đậm sang nhạt */
-      top: -10px; /* Điều chỉnh vị trí để thấy rõ */
-      left: 0;
-      border-radius: 5px 5px 0 0;
-      box-shadow: 0px -3px 8px rgba(0, 0, 0, 0.3); /* Tăng bóng đổ */
-    }
-
-    /* Gáy sách để tạo cảm giác 3D */
     .book-spine {
       position: absolute;
       top: -5px;
@@ -116,19 +87,6 @@
       box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.5);
     }
 
-    /* Hiệu ứng ánh sáng trên gáy sách */
-    .book::after {
-      content: "";
-      position: absolute;
-      width: 100%;
-      height: 5px;
-      top: -5px;
-      left: 0;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.6) 20%, rgba(255, 255, 255, 0) 80%);
-      border-radius: 5px;
-    }
-
-    /* NÚT BẤM */
     .buttons {
       position: absolute;
       top: 50%;
@@ -155,18 +113,25 @@
       color: #000;
     }
 
-    /* Nút bấm sát mép sách */
     .buttons button:first-child {
-      margin-left: -15px; /* Sát mép trái */
+      margin-left: 0; /* Đảm bảo nút chuyển trang trái sát vào */
     }
 
     .buttons button:last-child {
-      margin-right: -15px; /* Sát mép phải */
+      margin-right: 0; /* Đảm bảo nút chuyển trang phải sát vào */
     }
 
     /* Responsive cho điện thoại */
     @media (max-width: 768px) {
       .buttons button {
+        font-size: 2rem;
+      }
+
+      .book-container {
+        max-height: 70vh; /* Giới hạn chiều cao cho điện thoại */
+      }
+
+      .buttons {
         font-size: 2rem;
       }
     }
