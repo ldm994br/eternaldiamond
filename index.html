@@ -1,3 +1,4 @@
+Bạn đã nói:
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -143,17 +144,17 @@
 
                 let imgContent = "";
                 if (Array.isArray(product.img)) {
-                    imgContent = `
+                    imgContent = 
                         <div class="img-container">
                             <img src="${product.img[0]}" alt="${product.title}">
                             <img src="${product.img[1]}" alt="${product.title}">
                         </div>
-                    `;
+                    ;
                 } else {
-                    imgContent = `<img src="${product.img}" alt="${product.title}">`;
+                    imgContent = <img src="${product.img}" alt="${product.title}">;
                 }
 
-                page.innerHTML = `<h2>${product.title}</h2>${imgContent}<p>${product.desc}</p>`;
+                page.innerHTML = <h2>${product.title}</h2>${imgContent}<p>${product.desc}</p>;
                 page.style.zIndex = products.length - index;
                 book.appendChild(page);
             });
