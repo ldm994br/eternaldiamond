@@ -13,10 +13,10 @@
             margin: 0;
             padding: 0;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            overflow: hidden; /* Ẩn thanh cuộn nếu có */
         }
 
         .book-container {
@@ -32,6 +32,9 @@
             box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
             padding: 20px;
             background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .book {
@@ -39,6 +42,8 @@
             height: 100%;
             position: relative;
             transform-style: preserve-3d;
+            display: flex;
+            flex-direction: row;
         }
 
         .page {
@@ -47,20 +52,12 @@
             position: absolute;
             background: white;
             box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-            background: #ffffff;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            transform-origin: left center;
-            transform-style: preserve-3d;
-            transition: transform 1s ease-in-out;
+            background-size: cover;
+            background-position: center;
             backface-visibility: hidden;
             padding: 10px;
-            background-size: cover; /* Đảm bảo hình ảnh chiếm toàn bộ nền */
-            background-position: center; /* Căn giữa hình ảnh */
-        }
-
-        .page .front, .page .back {
-            /* Cả hai mặt của trang */
+            transform-origin: left center;
+            transition: transform 1s ease-in-out;
         }
 
         .buttons {
@@ -78,6 +75,9 @@
             background: rgba(0, 0, 0, 0.5);
             border: none;
             font-size: 2rem;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
         }
 
         .buttons button:hover {
@@ -98,9 +98,6 @@
     <div class="book" id="book">
         <!-- Trang đầu -->
         <div class="page" style="background-image: url('https://github.com/ldm994br/eternaldiamond/blob/main/Thi%E1%BA%BFt%20k%E1%BA%BF%20ch%C6%B0a%20c%C3%B3%20t%C3%AAn%20(2).png?raw=true');">
-            <div class="content">
-                <h2>Tiêu đề Trang Đầu</h2>
-                <p>Đây là mô tả về trang đầu của tạp chí. Bạn có thể thêm thông tin giới thiệu, chào mừng hoặc mô tả ngắn gọn về nội dung của tạp chí ở đây.</p>
             </div>
         </div>
     </div>
@@ -112,8 +109,7 @@
 </div>
 
 <script>
-    const products = [
-        {title: "Trang đầu", img: "https://github.com/ldm994br/eternaldiamond/blob/main/Thi%E1%BA%BFt%20k%E1%BA%BF%20ch%C6%B0a%20c%C3%B3%20t%C3%AAn%20(2).png?raw=true", desc: "Chào mừng bạn đến với giới thiệu sản phẩm."},
+    const products = [https://github.com/ldm994br/eternaldiamond/blob/main/Thi%E1%BA%BFt%20k%E1%BA%BF%20ch%C6%B0a%20c%C3%B3%20t%C3%AAn%20(2).png?raw=trueyour-image.jpg", desc: "Chào mừng bạn đến với giới thiệu sản phẩm."},
         {title: "Sản phẩm 1", img: "sp1.png", desc: "Mô tả sản phẩm 1."},
         {title: "Sản phẩm 2", img: "sp2.png", desc: "Mô tả sản phẩm 2."}
     ];
@@ -122,6 +118,9 @@
     const book = document.getElementById("book");
 
     function createPages() {
+        // Xóa tất cả các trang cũ
+        book.innerHTML = '';
+        
         products.forEach((product, index) => {
             const page = document.createElement("div");
             page.classList.add("page");
@@ -140,6 +139,7 @@
 
             book.appendChild(page);
         });
+        updatePage();
     }
 
     function updatePage() {
@@ -148,8 +148,10 @@
             if (index === currentPage) {
                 page.style.zIndex = 10;
                 page.classList.remove("flipped");
+                page.style.transform = 'rotateY(0deg)';
             } else {
                 page.style.zIndex = 1;
+                page.style.transform = 'rotateY(180deg)';
             }
         });
     }
