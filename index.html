@@ -20,30 +20,26 @@
         }
 
         .book-container {
-            width: 90vw;
-            max-width: 800px;
-            aspect-ratio: 1 / 1.41;
-            width: 595px; /* A4 chiều rộng */
-            height: 842px; /* A4 chiều cao */
             position: relative;
-            perspective: 2000px;
-            margin: auto;
-            border: 2px solid #ccc;
-            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
-            padding: 20px;
-            background-color: white;
+            width: 80vw; /* Cho phép người dùng thay đổi kích thước */
+            height: 80vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            transform-style: preserve-3d;
+            perspective: 1500px;
+            margin: 20px;
+            transition: transform 0.5s ease-in-out;
         }
 
         .book {
             width: 100%;
             height: 100%;
-            position: relative;
-            transform-style: preserve-3d;
             display: flex;
             flex-direction: row;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease-in-out;
         }
 
         .page {
@@ -84,21 +80,38 @@
             background: rgba(0, 0, 0, 0.8);
         }
 
+        .scale-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 10px;
+            font-size: 1.5rem;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
         /* Responsive cho điện thoại */
         @media (max-width: 768px) {
             .buttons button {
                 font-size: 1.5rem;
+            }
+
+            .scale-button {
+                font-size: 1.2rem;
+                top: 20px;
+                right: 20px;
             }
         }
     </style>
 </head>
 <body>
 
-<div class="book-container">
+<div class="book-container" id="book-container">
     <div class="book" id="book">
         <!-- Trang đầu (chèn hình vào đây) -->
         <div class="page" style="background-image: url('https://github.com/ldm994br/eternaldiamond/blob/main/Thi%E1%BA%BFt%20k%E1%BA%BF%20ch%C6%B0a%20c%C3%B3%20t%C3%AAn%20(2).png?raw=trueg');">
-    
             </div>
         </div>
     </div>
@@ -108,6 +121,9 @@
     <button onclick="prevPage()">&#x3C;</button>
     <button onclick="nextPage()">&#x3E;</button>
 </div>
+
+<!-- Nút điều chỉnh kích thước -->
+<button class="scale-button" onclick="scaleBook()">Phóng to/Thu nhỏ</button>
 
 <script>
     const products = [
@@ -124,7 +140,9 @@
     ];
 
     let currentPage = 0;
+    let scaleFactor = 1;
     const book = document.getElementById("book");
+    const bookContainer = document.getElementById("book-container");
 
     function createPages() {
         // Xóa tất cả các trang cũ
@@ -141,8 +159,6 @@
                     <p>${product.desc}</p>
                 </div>
                 <div class="back">
-                    <h2>Trang sau</h2>
-                    <p>Đây là mặt sau của ${product.title}.</p>
                 </div>
             `;
 
@@ -177,6 +193,12 @@
             currentPage--;
             updatePage();
         }
+    }
+
+    // Hàm phóng to/thu nhỏ cuốn sách
+    function scaleBook() {
+        scaleFactor = scaleFactor === 1 ? 1.5 : 1; // Phóng to hoặc thu nhỏ
+        bookContainer.style.transform = `scale(${scaleFactor})`;
     }
 
     createPages();
