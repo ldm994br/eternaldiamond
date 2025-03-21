@@ -79,18 +79,17 @@
         }
         .img-container {
     display: flex;
-    flex-direction: column; /* Xếp hình theo chiều dọc */
-    align-items: flex-start; /* Căn trái */
-    gap: 10px; /* Khoảng cách giữa hai ảnh */
+    flex-direction: column; /* Xếp theo hàng dọc */
+    align-items: center; /* Căn giữa */
 }
 
 .img-container img:first-child {
-    width: 40%;  /* Giảm kích thước ảnh đầu tiên xuống */
-    height: auto; /* Giữ tỷ lệ ảnh */
+    width: 70%; /* Thu nhỏ hình 1 lại */
+    height: auto;
 }
 
 .img-container img:last-child {
-    width: 50%;  /* Ảnh thứ hai lớn hơn một chút */
+    width: 100%; /* Giữ nguyên kích thước hình 2 */
     height: auto;
 }
 
