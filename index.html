@@ -1,143 +1,202 @@
 <!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giới thiệu Sản phẩm</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #ededed;
-            color: #333;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .book-container {
-            width: 100vw;
-            height: 100vh;
-            position: relative;
-            perspective: 2000px;
-        }
-        .book {
-            width: 100%;
-            height: 100%;
-            position: relative;
-        }
-        .page {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            background: white;
-            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-            transform-origin: left center;
-            transform-style: preserve-3d;
-            transition: transform 1s ease-in-out;
-        }
-        .page .front {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            backface-visibility: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        .page.flipped {
-            transform: rotateY(-180deg);
-        }
-        .buttons {
-            position: absolute;
-            top: 50%;
-            width: 100vw;
-            display: flex;
-            justify-content: space-between;
-            transform: translateY(-50%);
-            z-index: 10;
-        }
-        .buttons button {
-            background: rgba(0, 0, 0, 0.5);
-            border: none;
-            font-size: 2rem;
-            cursor: pointer;
-            color: white;
-            padding: 15px;
-            user-select: none;
-            pointer-events: auto;
-            border-radius: 50%;
-            transition: background 0.3s;
-        }
-        .buttons button:hover {
-            background: rgba(0, 0, 0, 0.8);
-        }
-    </style>
-</head>
-<body>
-    <div class="book-container">
-        <div class="book" id="book"></div>
-    </div>
-    <div class="buttons">
-        <button onclick="prevPage()">&#x3C;</button>
-        <button onclick="nextPage()">&#x3E;</button>
-    </div>
-    <script>
-        const products = [
-            {title: "Trang đầu", img: "https://raw.githubusercontent.com/ldm994br/eternaldiamond/main/Thi%E1%BA%BFt%20k%E1%BA%BF%20ch%C6%B0a%20c%C3%B3%20t%C3%AAn%20(1).png", desc: "Chào mừng bạn đến với giới thiệu sản phẩm."},
-            {title: "Sản phẩm 1", img: "sp1.png", desc: "Mô tả sản phẩm 1."},
-            {title: "Sản phẩm 2", img: "sp2.png", desc: "Mô tả sản phẩm 2."}
-        ];
-        let currentPage = 0;
-        const book = document.getElementById("book");
-
-        function createPages() {
-            products.forEach((product, index) => {
-                const page = document.createElement("div");
-                page.classList.add("page");
-                page.innerHTML = `
-                    <div class="front">
-                        <h2>${product.title}</h2>
-                        <img src="${product.img}" alt="${product.title}" style="width:100%; height:auto;">
-                        <p>${product.desc}</p>
-                    </div>
-                `;
-                page.style.zIndex = products.length - index;
-                book.appendChild(page);
-            });
-        }
-
-        function updatePage() {
-            const pages = document.querySelectorAll(".page");
-            pages.forEach((page, index) => {
-                if (index < currentPage) {  
-                    page.classList.add("flipped");
-                } else {
-                    page.classList.remove("flipped");
-                }
-            });
-        }
-
-        function nextPage() {
-            if (currentPage < products.length - 1) {
-                currentPage++;
-                updatePage();
-            }
-        }
-
-        function prevPage() {
-            if (currentPage > 0) {
-                currentPage--;
-                updatePage();
-            }
-        }
-
-        createPages();
-    </script>
-</body>
-</html>
+ <html lang="vi">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Giới thiệu Sản phẩm</title>
+     <style>
+         body {
+             font-family: 'Arial', sans-serif;
+             background-color: #ededed;
+             color: #333;
+             text-align: center;
+             margin: 0;
+             padding: 0;
+             display: flex;
+             flex-direction: column;
+             justify-content: center;
+             align-items: center;
+             height: 100vh;
+         }
+         .book-container {
+             width: 90vw;
+             max-width: 800px;
+             aspect-ratio: 1 / 1.41;
+             position: relative;
+             perspective: 2000px;
+         }
+         .book {
+             width: 100%;
+             height: 100%;
+             position: relative;
+         }
+         .page {
+             width: 100%;
+             height: 100%;
+             position: absolute;
+             background: white;
+             box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+             border-radius: 10px;
+             transform-origin: left center;
+             transform-style: preserve-3d;
+             transition: transform 1s ease-in-out;
+         }
+         .page .front, .page .back {
+             width: 100%;
+             height: 100%;
+             position: absolute;
+             backface-visibility: hidden;
+             display: flex;
+             flex-direction: column;
+             justify-content: center;
+             align-items: center;
+             padding: 20px;
+         }
+         .page .back {
+             background-color: #f8f8f8;
+             transform: rotateY(180deg);
+         }
+         .page.flipped {
+             transform: rotateY(-180deg);
+         }
+ 
+         /* Hiệu ứng 3D cạnh trên của sách */
+         .book::before {
+             content: "";
+             position: absolute;
+             width: 100%;
+             height: 10px; /* Tăng độ dày của cạnh trên */
+             background: linear-gradient(to bottom, #aaa, #ddd); /* Màu chuyển sắc từ xám đậm sang nhạt */
+             top: -10px; /* Điều chỉnh vị trí để thấy rõ */
+             left: 0;
+             border-radius: 5px 5px 0 0;
+             box-shadow: 0px -3px 8px rgba(0, 0, 0, 0.3); /* Tăng bóng đổ */
+         }
+ 
+         /* Gáy sách để tạo cảm giác 3D */
+         .book-spine {
+             position: absolute;
+             top: -5px;
+             left: 50%;
+             width: 80%;
+             height: 12px;
+             background: linear-gradient(to bottom, #888, #ccc);
+             border-radius: 10px 10px 0 0;
+             transform: translateX(-50%);
+             box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.5);
+         }
+ 
+         /* Hiệu ứng ánh sáng trên gáy sách */
+         .book::after {
+             content: "";
+             position: absolute;
+             width: 100%;
+             height: 5px;
+             top: -5px;
+             left: 0;
+             background: radial-gradient(circle, rgba(255, 255, 255, 0.6) 20%, rgba(255, 255, 255, 0) 80%);
+             border-radius: 5px;
+         }
+ 
+         /* NÚT BẤM */
+         .buttons {
+             position: absolute;
+             top: 50%;
+             width: 100vw;
+             display: flex;
+             justify-content: space-between;
+             transform: translateY(-50%);
+             z-index: 10;
+         }
+         .buttons button {
+             background: rgba(0, 0, 0, 0.5);
+             border: none;
+             font-size: 2rem;
+             cursor: pointer;
+             color: white;
+             padding: 15px;
+             user-select: none;
+             pointer-events: auto;
+             border-radius: 50%;
+             transition: background 0.3s;
+         }
+         .buttons button:hover {
+             background: rgba(0, 0, 0, 0.8);
+         }
+         .buttons button:first-child {
+             margin-left: 20px; /* Căn chỉnh nút trái */
+         }
+         .buttons button:last-child {
+             margin-right: 20px; /* Căn chỉnh nút phải */
+         }
+     </style>
+ </head>
+ <body>
+     <div class="book-container">
+         <div class="book" id="book"></div>
+         <div class="book-spine"></div> <!-- Thêm gáy sách -->
+     </div>
+     <div class="buttons">
+         <button onclick="prevPage()">&#x3C;</button>
+         <button onclick="nextPage()">&#x3E;</button>
+     </div>
+     <script>
+         const products = [
+             {title: "Trang đầu", img: "1.png", desc: "Chào mừng bạn đến với giới thiệu sản phẩm."},
+             {title: "Trang đầu", img: "https://github.com/ldm994br/eternaldiamond/blob/main/Thi%E1%BA%BFt%20k%E1%BA%BF%20ch%C6%B0a%20c%C3%B3%20t%C3%AAn%20(1).png?raw=true", desc: "Chào mừng bạn đến với giới thiệu sản phẩm."},
+             {title: "Sản phẩm 1", img: "sp1.png", desc: "Mô tả sản phẩm 1."},
+             {title: "Sản phẩm 2", img: "sp2.png", desc: "Mô tả sản phẩm 2."}
+         ];
+         let currentPage = 0;
+         const book = document.getElementById("book");
+ 
+         function createPages() {
+             products.forEach((product, index) => {
+                 const page = document.createElement("div");
+                 page.classList.add("page");
+ 
+                 page.innerHTML = `
+                     <div class="front">
+                         <h2>${product.title}</h2>
+                         <img src="${product.img}" alt="${product.title}" style="width:80%; max-height:60%;">
+                         <p>${product.desc}</p>
+                     </div>
+                     <div class="back">
+                         <h2>Trang sau</h2>
+                         <p>Đây là mặt sau của ${product.title}.</p>
+                     </div>
+                 `;
+                 page.style.zIndex = products.length - index;
+                 book.appendChild(page);
+             });
+         }
+ 
+         function updatePage() {
+             const pages = document.querySelectorAll(".page");
+             pages.forEach((page, index) => {
+                 if (index < currentPage) {  
+                     page.classList.add("flipped");
+                 } else {
+                     page.classList.remove("flipped");
+                 }
+             });
+         }
+ 
+         function nextPage() {
+             if (currentPage < products.length - 1) {
+                 currentPage++;
+                 updatePage();
+             }
+         }
+ 
+         function prevPage() {
+             if (currentPage > 0) {
+                 currentPage--;
+                 updatePage();
+             }
+         }
+ 
+         createPages();
+     </script>
+ </body>
+ </html>
