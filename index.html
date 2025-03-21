@@ -79,8 +79,12 @@
         }
         .img-container {
     display: flex;
-    flex-direction: column; /* Xếp theo hàng dọc */
-    align-items: center; /* Căn giữa */
+    flex-direction: row; /* Xếp ảnh theo chiều ngang */
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* Khoảng cách giữa hai ảnh */
+    max-width: 100%; /* Đảm bảo không tràn ra ngoài */
+
 }
 
 .img-container img:first-child {
