@@ -52,7 +52,7 @@
             border-radius: 10px;
             transform-origin: left center;
             transform-style: preserve-3d;
-            transition: transform 1s ease-in-out;
+            transition: transform 0.8s ease-in-out; /* Giảm thời gian chuyển trang */
             backface-visibility: hidden;
             padding: 10px;
         }
@@ -210,4 +210,4 @@
                 const page = document.createElement("div");
                 page.classList.add("page");
                 let imgContent = "";
-                if (Array.isArray(product.img)) {
+                if (Array.isArray(product.img))
