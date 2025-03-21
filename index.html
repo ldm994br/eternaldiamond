@@ -1,218 +1,219 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giới thiệu Sản phẩm</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #ededed;
-            color: #333;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: auto; /* Cho phép cuộn khi phóng to */
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Giới thiệu Sản phẩm</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #ededed;
+      color: #333;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
 
-        .book-container {
-            position: relative;
-            width: 21cm; /* Khổ A4 */
-            height: 29.7cm; /* Khổ A4 */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transform-style: preserve-3d;
-            perspective: 1500px;
-            margin: 20px;
-            background-color: white; /* Thêm màu nền cho cuốn sách */
-            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-            overflow: hidden; /* Ẩn thanh cuộn */
-        }
+    .book-container {
+      position: relative;
+      max-width: 100%;  /* Cho phép cuốn sách chiếm toàn bộ chiều rộng màn hình */
+      max-height: 90vh;  /* Giới hạn chiều cao cuốn sách */
+      aspect-ratio: 1 / 1.41; /* Tỷ lệ A4 */
+      background-color: white;
+      overflow: hidden; /* Đảm bảo không bị cắt bớt */
+      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+    }
 
-        .book {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: row;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.5s ease-in-out;
-        }
+    .book {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+    }
 
-        .page {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            background: white;
-            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-            background-size: cover;
-            background-position: center;
-            backface-visibility: hidden;
-            padding: 10px;
-            transform-origin: left center;
-            transition: transform 1s ease-in-out;
-        }
+    .page {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      background: white;
+      box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+      background: #ffffff;
+      border-radius: 10px;
+      transform-origin: left center;
+      transform-style: preserve-3d;
+      transition: transform 1s ease-in-out;
+      backface-visibility: hidden;
+      padding: 10px;
+    }
 
-        .buttons {
-            position: absolute;
-            top: 50%;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            transform: translateY(-50%);
-            z-index: 10;
-            padding: 0 10px;
-        }
+    .page img {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      backface-visibility: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      height: auto;
+      border-radius: 10px;
+      max-height: 60vh;
+      object-fit: cover;
+    }
 
-        .buttons button {
-            background: rgba(0, 0, 0, 0.5);
-            border: none;
-            font-size: 2rem;
-            color: white;
-            padding: 10px;
-            cursor: pointer;
-        }
+    .page .back {
+      background-color: #f8f8f8;
+      transform: rotateY(180deg);
+    }
 
-        .buttons button:hover {
-            background: rgba(0, 0, 0, 0.8);
-        }
+    .page.flipped {
+      transform: rotateY(-180deg);
+    }
 
-        /* Điều chỉnh cho các màn hình nhỏ */
-        @media (max-width: 768px) {
-            .book-container {
-                width: 90vw; /* Giảm chiều rộng cuốn sách để phù hợp với màn hình điện thoại */
-                height: auto;
-            }
-        }
+    .book-spine {
+      position: absolute;
+      top: -5px;
+      left: 50%;
+      width: 80%;
+      height: 12px;
+      background: linear-gradient(to bottom, #888, #ccc);
+      border-radius: 10px 10px 0 0;
+      transform: translateX(-50%);
+      box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.5);
+    }
 
-        /* Responsive cho màn hình nhỏ hơn (điện thoại) */
-        @media (max-width: 480px) {
-            .book-container {
-                width: 100vw;
-                height: 100vh;
-                padding: 10px; /* Thêm padding để cuốn sách không bị chặt góc */
-            }
+    .buttons {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      z-index: 10;
+      padding: 0 20px;
+      font-size: 3rem;
+      color: #333;
+    }
 
-            .buttons button {
-                font-size: 1.5rem; /* Giảm kích thước nút điều hướng */
-            }
-        }
-    </style>
+    .buttons button {
+      background: none;
+      border: none;
+      font-size: 3rem;
+      color: #333;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .buttons button:hover {
+      color: #000;
+    }
+
+    .buttons button:first-child {
+      margin-left: 0; /* Đảm bảo nút chuyển trang trái sát vào */
+    }
+
+    .buttons button:last-child {
+      margin-right: 0; /* Đảm bảo nút chuyển trang phải sát vào */
+    }
+
+    /* Responsive cho điện thoại */
+    @media (max-width: 768px) {
+      .buttons button {
+        font-size: 2rem;
+      }
+
+      .book-container {
+        max-height: 70vh; /* Giới hạn chiều cao cho điện thoại */
+      }
+
+      .buttons {
+        font-size: 2rem;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="book-container">
+    <div class="book" id="book"></div>
+    <div class="book-spine"></div> <!-- Thêm gáy sách -->
+  </div>
 
-<div class="book-container" id="book-container">
-    <div class="book" id="book">
-        <!-- Trang đầu (chèn hình vào đây) -->
-        <div class="page" style="background-image: url('https://raw.githubusercontent.com/ldm994br/eternaldiamond/main/Thi%E1%BA%BFt%20k%E1%BA%BF%20ch%C6%B0a%20c%C3%B3%20t%C3%AAn%20(2).png');">
-        </div>
-    </div>
-</div>
+  <div class="buttons">
+    <!-- Nút bấm chuyển trang đơn giản với dấu < và > -->
+    <button onclick="prevPage()">&lt;</button>
+    <button onclick="nextPage()">&gt;</button>
+  </div>
 
-<div class="buttons">
-    <button onclick="prevPage()">&#x3C;</button>
-    <button onclick="nextPage()">&#x3E;</button>
-</div>
-
-<script>
+  <script>
     const products = [
-        {title: "Trang đầu", img: "https://raw.githubusercontent.com/ldm994br/eternaldiamond/main/Thi%E1%BA%BFt%20k%E1%BA%BF%20ch%C6%B0a%20c%C3%B3%20t%C3%AAn%20(2).png", desc: "Chào mừng bạn đến với giới thiệu sản phẩm."},
-        {title: "Sản phẩm 1", img: "sp1.png", desc: "Mô tả sản phẩm 1."},
-        {title: "Sản phẩm 2", img: "sp2.png", desc: "Mô tả sản phẩm 2."},
-        {title: "Sản phẩm 3", img: "sp3.png", desc: "Mô tả sản phẩm 3."},
-        {title: "Sản phẩm 4", img: "sp4.png", desc: "Mô tả sản phẩm 4."},
-        {title: "Sản phẩm 5", img: "sp5.png", desc: "Mô tả sản phẩm 5."},
-        {title: "Sản phẩm 6", img: "sp6.png", desc: "Mô tả sản phẩm 6."},
-        {title: "Sản phẩm 7", img: "sp7.png", desc: "Mô tả sản phẩm 7."},
-        {title: "Sản phẩm 8", img: "sp8.png", desc: "Mô tả sản phẩm 8."},
-        {title: "Sản phẩm 9", img: "sp9.png", desc: "Mô tả sản phẩm 9."}
+      {title: "Trang đầu", img: "1.png", desc: "Chào mừng bạn đến với giới thiệu sản phẩm."},
+      {title: "Sản phẩm 1", img: "sp1.png", desc: "Mô tả sản phẩm 1."},
+      {title: "Sản phẩm 2", img: "sp2.png", desc: "Mô tả sản phẩm 2."},
+      {title: "Trang đầu", img: "https://via.placeholder.com/400", desc: "Chào mừng bạn đến với giới thiệu sản phẩm."},
+      {title: "Sản phẩm 1", img: ["https://via.placeholder.com/200", "https://via.placeholder.com/200"], desc: "Mô tả sản phẩm 1."},
+      {title: "Sản phẩm 2", img: "https://via.placeholder.com/400", desc: "Mô tả sản phẩm 2."},
+      {title: "Sản phẩm 3", img: "https://via.placeholder.com/400", desc: "Mô tả sản phẩm 3."}
     ];
 
     let currentPage = 0;
-    let scaleFactor = 1;
     const book = document.getElementById("book");
-    const bookContainer = document.getElementById("book-container");
 
     function createPages() {
-        // Xóa tất cả các trang cũ
-        book.innerHTML = '';
-        
-        products.forEach((product, index) => {
-            const page = document.createElement("div");
-            page.classList.add("page");
-            page.style.backgroundImage = `url('${product.img}')`;  // Chèn hình ảnh vào trang
+      products.forEach((product, index) => {
+        const page = document.createElement("div");
+        page.classList.add("page");
 
-            page.innerHTML = `
-                <div class="front">
-                    <h2>${product.title}</h2>
-                    <p>${product.desc}</p>
-                </div>
-                <div class="back">
-                </div>
-            `;
+        let imgContent = "";
+        if (Array.isArray(product.img)) {
+          imgContent = `
+            <div class="img-container">
+              <img src="${product.img[0]}" alt="${product.title}">
+              <img src="${product.img[1]}" alt="${product.title}">
+            </div>
+          `;
+        } else {
+          imgContent = `<img src="${product.img}" alt="${product.title}">`;
+        }
 
-            book.appendChild(page);
-        });
-        updatePage();
+        page.innerHTML = `<h2>${product.title}</h2>${imgContent}<p>${product.desc}</p>`;
+        page.style.zIndex = products.length - index;
+        book.appendChild(page);
+      });
     }
 
     function updatePage() {
-        const pages = document.querySelectorAll(".page");
-        pages.forEach((page, index) => {
-            if (index === currentPage) {
-                page.style.zIndex = 10;
-                page.classList.remove("flipped");
-                page.style.transform = 'rotateY(0deg)';
-            } else {
-                page.style.zIndex = 1;
-                page.style.transform = 'rotateY(180deg)';
-            }
-        });
+      const pages = document.querySelectorAll(".page");
+      pages.forEach((page, index) => {
+        if (index < currentPage) {
+          page.classList.add("flipped");
+          page.style.zIndex = products.length - index;
+        } else {
+          page.classList.remove("flipped");
+          page.style.zIndex = products.length - index;
+        }
+      });
     }
 
     function nextPage() {
-        if (currentPage < products.length - 1) {
-            currentPage++;
-            updatePage();
-        }
+      if (currentPage < products.length - 1) {
+        currentPage++;
+        updatePage();
+      }
     }
 
     function prevPage() {
-        if (currentPage > 0) {
-            currentPage--;
-            updatePage();
-        }
+      if (currentPage > 0) {
+        currentPage--;
+        updatePage();
+      }
     }
-
-    // Hàm thu phóng cuốn sách
-    function scaleBook(e) {
-        e.preventDefault(); // Ngăn không cho cuộn trang
-
-        if (e.deltaY < 0) {
-            // Phóng to
-            scaleFactor += 0.05;  // Tăng nhẹ tỷ lệ
-        } else {
-            // Thu nhỏ
-            scaleFactor -= 0.05;  // Giảm nhẹ tỷ lệ
-        }
-
-        // Giới hạn mức thu nhỏ/phóng to
-        scaleFactor = Math.max(0.5, Math.min(scaleFactor, 2)); // Giới hạn tỷ lệ từ 0.5 đến 2
-
-        // Cập nhật cuốn sách theo tỷ lệ
-        book.style.transform = `scale(${scaleFactor})`;
-    }
-
-    // Thêm sự kiện cuộn chuột để thu phóng
-    bookContainer.addEventListener('wheel', scaleBook);
 
     createPages();
-</script>
-
+  </script>
 </body>
 </html>
