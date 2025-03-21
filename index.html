@@ -79,6 +79,16 @@
         .buttons img:hover {
             opacity: 0.7;
         }
+        @media (max-width: 768px) { /* Dành cho màn hình nhỏ */
+    .buttons {
+        bottom: 5px; /* Dịch nút lên để không bị che */
+        padding: 0 10px;
+    }
+    .buttons img {
+        width: 40px; /* Giảm kích thước trên điện thoại */
+    }
+}
+
         .img-container {
     display: flex;
     flex-direction: column; /* Xếp ảnh theo chiều ngang */
