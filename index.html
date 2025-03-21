@@ -29,7 +29,6 @@
             transform-style: preserve-3d;
             perspective: 1500px;
             margin: 20px;
-            transition: transform 0.5s ease-in-out;
             background-color: white; /* Thêm màu nền cho cuốn sách */
             box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
             overflow: auto; /* Cho phép cuộn khi phóng to */
@@ -206,8 +205,8 @@
             scaleFactor -= 0.05;  // Giảm nhẹ tỷ lệ
         }
 
-        // Không giới hạn phóng to và thu nhỏ
-        scaleFactor = Math.max(0.2, Math.min(scaleFactor, 3)); // Cấp độ thu nhỏ và phóng to tùy chỉnh (từ 0.2 đến 3 lần)
+        // Giới hạn mức thu nhỏ/phóng to
+        scaleFactor = Math.max(0.2, Math.min(scaleFactor, 2)); // Giới hạn tỷ lệ từ 0.2 đến 2
 
         // Cập nhật cuốn sách theo tỷ lệ
         book.style.transform = `scale(${scaleFactor})`;
