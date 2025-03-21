@@ -19,9 +19,9 @@
             height: 100vh;
         }
         .book-container {
-    width: 800px;
-    height: 500px;
-    position: relative; /* Bổ sung để định vị các trang */
+   width: 595px;  /* A4 chiều rộng */
+    height: 842px; /* A4 chiều cao */
+    position: relative;
     margin: auto;
     border: 2px solid #ccc;
     box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
@@ -62,13 +62,12 @@
             transform: rotateY(-180deg);
         }
         .buttons {
-            position: relative; /* Sửa absolute thành relative */
+           position: absolute;
     bottom: 10px;
     width: 100%;
     display: flex;
-    justify-content: center; /* Căn giữa nút */
-    gap: 20px;
-    padding: 10px;
+    justify-content: space-between; /* Căn hai nút ra hai góc */
+    padding: 0 20px;
         }
         .buttons img {
             width: 50px;
@@ -83,7 +82,7 @@
     flex-direction: column; /* Xếp ảnh theo chiều ngang */
     justify-content: center;
     align-items: center;
-    gap: 10px; /* Khoảng cách giữa hai ảnh */
+    gap: 0px; /* Khoảng cách giữa hai ảnh */
     max-width: 100%; /* Đảm bảo không tràn ra ngoài */
 
 }
