@@ -77,6 +77,20 @@
         .buttons img:hover {
             opacity: 0.7;
         }
+        .img-container {
+    display: flex;
+    flex-direction: column; /* Xếp hình theo chiều dọc */
+    align-items: flex-start; /* Căn trái */
+    gap: 10px; /* Khoảng cách giữa hai ảnh */
+}
+
+.img-container img {
+    width: 40%; /* Điều chỉnh kích thước */
+    max-height: 30vh; /* Giới hạn chiều cao */
+    object-fit: cover;
+    border-radius: 10px;
+}
+
     </style>
 </head>
 <body>
@@ -108,12 +122,24 @@
 
         function createPages() {
             products.forEach((product, index) => {
-                const page = document.createElement("div");
-                page.classList.add("page");
-                page.innerHTML = `<h2>${product.title}</h2><img src="${product.img}" alt="${product.title}"><p>${product.desc}</p>`;
-                page.style.zIndex = products.length - index;
-                book.appendChild(page);
-            });
+        const page = document.createElement("div");
+        page.classList.add("page");
+
+        let imgContent = "";
+        if (Array.isArray(product.img)) {
+            imgContent = `
+                <div class="img-container">
+                    <img src="${product.img[0]}" alt="${product.title}">
+                    <img src="${product.img[1]}" alt="${product.title}">
+                </div>`;
+        } else {
+            imgContent = `<img src="${product.img}" alt="${product.title}">`;
+        }
+
+        page.innerHTML = `<h2>${product.title}</h2>${imgContent}<p>${product.desc}</p>`;
+        page.style.zIndex = products.length - index;
+        book.appendChild(page);
+    });
         }
 
         function updatePage() {
