@@ -18,30 +18,47 @@
              align-items: center;
              height: 100vh;
          }
+         
          .book-container {
              width: 90vw;
              max-width: 800px;
              aspect-ratio: 1 / 1.41;
+             width: 595px; /* A4 chiều rộng */
+             height: 842px; /* A4 chiều cao */
              position: relative;
              perspective: 2000px;
+             margin: auto;
+             border: 2px solid #ccc;
+             box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+             padding: 20px;
+             background-color: white;
          }
+         
          .book {
              width: 100%;
              height: 100%;
              position: relative;
+             transform-style: preserve-3d;
          }
+         
          .page {
              width: 100%;
              height: 100%;
              position: absolute;
              background: white;
              box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+             background: #ffffff;
+             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
              border-radius: 10px;
              transform-origin: left center;
              transform-style: preserve-3d;
              transition: transform 1s ease-in-out;
+             backface-visibility: hidden;
+             padding: 10px;
          }
          .page .front, .page .back {
+         
+         .page img {
              width: 100%;
              height: 100%;
              position: absolute;
@@ -51,11 +68,20 @@
              justify-content: center;
              align-items: center;
              padding: 20px;
+             height: auto;
+             border-radius: 10px;
+             max-height: 60vh;
+             object-fit: cover;
          }
          .page .back {
              background-color: #f8f8f8;
              transform: rotateY(180deg);
+         
+         .page h2, .page p {
+             font-size: 1rem;
+             margin: 10px 0;
          }
+         
          .page.flipped {
              transform: rotateY(-180deg);
          }
@@ -99,19 +125,27 @@
          }
  
          /* NÚT BẤM */
+         /* Căn chỉnh nút bấm */
          .buttons {
              position: absolute;
              top: 50%;
              width: 100vw;
+             width: 100%;
              display: flex;
              justify-content: space-between;
              transform: translateY(-50%);
              z-index: 10;
+             z-index: 1000;
+             padding: 0 10px;
          }
          .buttons button {
              background: rgba(0, 0, 0, 0.5);
              border: none;
              font-size: 2rem;
+ 
+         .buttons img {
+             width: 50px;
+             height: auto;
              cursor: pointer;
              color: white;
              padding: 15px;
@@ -128,6 +162,16 @@
          }
          .buttons button:last-child {
              margin-right: 20px; /* Căn chỉnh nút phải */
+ 
+         .buttons img:hover {
+             opacity: 0.7;
+         }
+         
+         /* Responsive cho điện thoại */
+         @media (max-width: 768px) {
+             .buttons img {
+                 width: 40px;
+             }
          }
      </style>
  </head>
@@ -139,14 +183,26 @@
      <div class="buttons">
          <button onclick="prevPage()">&#x3C;</button>
          <button onclick="nextPage()">&#x3E;</button>
+         <div class="book" id="book">
+             <!-- Các trang sẽ được thêm vào bằng JavaScript -->
+         </div>
+         <div class="buttons">
+             <img src="https://cdn-icons-png.flaticon.com/512/271/271220.png" onclick="prevPage()" alt="Previous">
+             <img src="https://cdn-icons-png.flaticon.com/512/271/271228.png" onclick="nextPage()" alt="Next">
+         </div>
      </div>
+ 
      <script>
          const products = [
-             {title: "Trang đầu", img: "https://github.com/ldm994br/eternaldiamond/blob/main/Thi%E1%BA%BFt%20k%E1%BA%BF%20ch%C6%B0a%20c%C3%B3%20t%C3%AAn%20(1).png?raw=true", desc: "Chào mừng bạn đến với giới thiệu sản phẩm."},
              {title: "Trang đầu", img: "1.png", desc: "Chào mừng bạn đến với giới thiệu sản phẩm."},
              {title: "Sản phẩm 1", img: "sp1.png", desc: "Mô tả sản phẩm 1."},
              {title: "Sản phẩm 2", img: "sp2.png", desc: "Mô tả sản phẩm 2."}
+             {title: "Trang đầu", img: "https://via.placeholder.com/400", desc: "Chào mừng bạn đến với giới thiệu sản phẩm."},
+             {title: "Sản phẩm 1", img: ["https://via.placeholder.com/200", "https://via.placeholder.com/200"], desc: "Mô tả sản phẩm 1."},
+             {title: "Sản phẩm 2", img: "https://via.placeholder.com/400", desc: "Mô tả sản phẩm 2."},
+             {title: "Sản phẩm 3", img: "https://via.placeholder.com/400", desc: "Mô tả sản phẩm 3."}
          ];
+         
          let currentPage = 0;
          const book = document.getElementById("book");
  
@@ -166,6 +222,19 @@
                          <p>Đây là mặt sau của ${product.title}.</p>
                      </div>
                  ;
+                 let imgContent = "";
+                 if (Array.isArray(product.img)) {
+                     imgContent = `
+                         <div class="img-container">
+                             <img src="${product.img[0]}" alt="${product.title}">
+                             <img src="${product.img[1]}" alt="${product.title}">
+                         </div>
+                     `;
+                 } else {
+                     imgContent = `<img src="${product.img}" alt="${product.title}">`;
+                 }
+ 
+                 page.innerHTML = `<h2>${product.title}</h2>${imgContent}<p>${product.desc}</p>`;
                  page.style.zIndex = products.length - index;
                  book.appendChild(page);
              });
@@ -175,9 +244,15 @@
              const pages = document.querySelectorAll(".page");
              pages.forEach((page, index) => {
                  if (index < currentPage) {  
+                 if (index === currentPage) {
+                     page.style.zIndex = products.length;
+                     page.classList.remove("flipped");
+                 } else if (index < currentPage) {
                      page.classList.add("flipped");
+                     page.style.zIndex = products.length - index;
                  } else {
                      page.classList.remove("flipped");
+                     page.style.zIndex = products.length - index;
                  }
              });
          }
