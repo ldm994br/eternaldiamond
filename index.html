@@ -32,6 +32,7 @@
             transition: transform 0.5s ease-in-out;
             background-color: white; /* Thêm màu nền cho cuốn sách */
             box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            overflow: auto; /* Cho phép cuộn khi phóng to */
         }
 
         .book {
@@ -113,7 +114,7 @@
 <div class="book-container" id="book-container">
     <div class="book" id="book">
         <!-- Trang đầu (chèn hình vào đây) -->
-        <div class="page" style="background-image: url('https://github.com/ldm994br/eternaldiamond/blob/main/Thi%E1%BA%BFt%20k%E1%BA%BF%20ch%C6%B0a%20c%C3%B3%20t%C3%AAn%20(2).png?raw=trueg');">
+        <div class="page" style="background-image: url('https://raw.githubusercontent.com/ldm994br/eternaldiamond/main/Thi%E1%BA%BFt%20k%E1%BA%BF%20ch%C6%B0a%20c%C3%B3%20t%C3%AAn%20(2).png');">
         </div>
     </div>
 </div>
@@ -125,7 +126,7 @@
 
 <script>
     const products = [
-        {title: "Trang đầu", img: "https://github.com/ldm994br/eternaldiamond/blob/main/Thi%E1%BA%BFt%20k%E1%BA%BF%20ch%C6%B0a%20c%C3%B3%20t%C3%AAn%20(2).png?raw=true", desc: "Chào mừng bạn đến với giới thiệu sản phẩm."},
+        {title: "Trang đầu", img: "https://raw.githubusercontent.com/ldm994br/eternaldiamond/main/Thi%E1%BA%BFt%20k%E1%BA%BF%20ch%C6%B0a%20c%C3%B3%20t%C3%AAn%20(2).png", desc: "Chào mừng bạn đến với giới thiệu sản phẩm."},
         {title: "Sản phẩm 1", img: "sp1.png", desc: "Mô tả sản phẩm 1."},
         {title: "Sản phẩm 2", img: "sp2.png", desc: "Mô tả sản phẩm 2."},
         {title: "Sản phẩm 3", img: "sp3.png", desc: "Mô tả sản phẩm 3."},
@@ -195,6 +196,8 @@
 
     // Hàm thu phóng cuốn sách
     function scaleBook(e) {
+        e.preventDefault(); // Ngăn không cho cuộn trang
+
         if (e.deltaY < 0) {
             // Phóng to
             scaleFactor += 0.05;  // Tăng nhẹ tỷ lệ
@@ -207,7 +210,7 @@
         scaleFactor = Math.max(0.2, Math.min(scaleFactor, 3)); // Cấp độ thu nhỏ và phóng to tùy chỉnh (từ 0.2 đến 3 lần)
 
         // Cập nhật cuốn sách theo tỷ lệ
-        bookContainer.style.transform = `scale(${scaleFactor})`;
+        book.style.transform = `scale(${scaleFactor})`;
     }
 
     // Thêm sự kiện cuộn chuột để thu phóng
