@@ -16,7 +16,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            overflow: hidden; /* Ẩn thanh cuộn nếu có */
+            overflow: auto; /* Cho phép cuộn khi phóng to */
         }
 
         .book-container {
@@ -31,7 +31,7 @@
             margin: 20px;
             background-color: white; /* Thêm màu nền cho cuốn sách */
             box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-            overflow: auto; /* Cho phép cuộn khi phóng to */
+            overflow: hidden; /* Ẩn thanh cuộn */
         }
 
         .book {
@@ -87,10 +87,6 @@
             .book-container {
                 width: 90vw; /* Giảm chiều rộng cuốn sách để phù hợp với màn hình điện thoại */
                 height: auto;
-            }
-
-            .book {
-                transform: scale(0.8); /* Phóng to thu nhỏ cuốn sách để vừa với màn hình */
             }
         }
 
@@ -206,7 +202,7 @@
         }
 
         // Giới hạn mức thu nhỏ/phóng to
-        scaleFactor = Math.max(0.2, Math.min(scaleFactor, 2)); // Giới hạn tỷ lệ từ 0.2 đến 2
+        scaleFactor = Math.max(0.5, Math.min(scaleFactor, 2)); // Giới hạn tỷ lệ từ 0.5 đến 2
 
         // Cập nhật cuốn sách theo tỷ lệ
         book.style.transform = `scale(${scaleFactor})`;
